@@ -1,0 +1,94 @@
+html,
+body {
+  height: 100%;
+  background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%);
+  color: white;
+}
+
+h1 {
+  margin-top: 15px;
+  margin-bottom: 1px;
+}
+
+form {
+  padding-left: 15px;
+}
+
+img {
+  height: 60px;
+}
+
+a {
+  color: white;
+}
+
+a:hover {
+  color: white;
+}
+
+.container {
+  max-width: 700px;
+  margin-top: 50px;
+}
+
+.overview {
+  padding-left: 30px;
+}
+
+.current-date {
+  font-size: 20px;
+  margin: 0 auto;
+}
+
+.weather-info {
+  margin-bottom: 20px;
+}
+
+.today-weather {
+  text-align: center;
+  margin: 10px auto;
+}
+
+.weather-explaination,
+.range-today-temperature {
+  font-size: 25px;
+}
+
+.today-weather-icon {
+  display: block;
+  font-size: 60px;
+}
+
+.main-temperature {
+  font-size: 60px;
+}
+
+.range-today-temperature {
+  position: relative;
+  left: -29px;
+}
+
+.unit {
+  position: relative;
+  top: -30px;
+  right: 5px;
+}
+
+.weather-details-left {
+  position: relative;
+  left: 25px;
+}
+
+.weather-details-info {
+  margin-top: -20px;
+}
+
+.weather-forecast {
+  text-align: center;
+}
+
+.weather-forecast-day,
+.weather-forecast-temperature {
+  font-size: 18px;
+  margin-top: 10px;
+}
