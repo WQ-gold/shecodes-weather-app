@@ -43,7 +43,7 @@ function formatDate() {
 
 formatDate(now);
 
-//challenge 2
+
 function showCity(event) {
   event.preventDefault();
 
@@ -68,7 +68,7 @@ function searchCity(city) {
 let submitCity = document.querySelector("#search-city-form");
 submitCity.addEventListener("submit", showCity);
 
-//challenge 3
+
 function convertToFahrenheit(event) {
   event.preventDefault();
   let temperatureElement = document.querySelector("#main-temperature");
@@ -90,17 +90,34 @@ function convertToCelcius(event) {
 let celciusLink = document.querySelector("#celcius-link");
 celciusLink.addEventListener("click", convertToCelcius);
 
-//Week 5 Homework
 
 function showTemperature(response) {
-  let currentCity = response.data.name;
-  let temperatureNow = Math.round(response.data.main.temp);
   let cityElement = document.querySelector("#city");
+  let weatherDescriptionElement = document.querySelector("#weather-explaination");
   let temperatureElement = document.querySelector("#main-temperature");
-  cityElement.innerHTML = `${currentCity}`;
-  temperatureElement.innerHTML = `${temperatureNow}`;
+  let maxTemperatureElement = document.querySelector("#today-max-temperature");
+  let minTemperatureElement = document.querySelector("#today-min-temperature");
+ // let sunriseElement = document.querySelector("#sunrise-details");
+  let rainElement = document.querySelector("#rain-details");
+  let windspeedElement = document.querySelector("#windspeed-details");
+  let sunsetElement = document.querySelector("#sunset-details");
+  let humidityElement = document.querySelector("#humidity-details");
+  let feelsLikeElement = document.querySelector("#feels-like-details");
 
-  console.log(`The temperature in ${currentCity} is ${temperatureNow} degrees`);
+  cityElement.innerHTML = response.data.name;
+  weatherDescriptionElement.innerHTML = response.data.weather[0].description;
+  temperatureElement.innerHTML = Math.round(response.data.main.temp);
+  maxTemperatureElement.innerHTML = `${Math.round(response.data.main.temp_max)}°`;
+  minTemperatureElement.innerHTML = `${Math.round(response.data.main.temp_min)}°`;
+ // sunriseElement.innerHTML = Math.round(response.data.sys.sunrise);
+  rainElement.innerHTML = `${Math.round(response.data.clouds.all)}%`;
+  windspeedElement.innerHTML = `${Math.round(response.data.wind.speed)}m/s`;
+  sunsetElement.innerHTML = Math.round(response.data.sys.sunset*1000);
+  humidityElement.innerHTML = `${Math.round(response.data.main.humidity)}%`;
+  feelsLikeElement.innerHTML = `${Math.round(response.data.main.feels_like)}°`;
+
+//  console.log(`The temperature in ${currentCity} is ${temperatureNow} degrees`);
+  console.log(response.data);
 }
 
 function showPosition(position) {

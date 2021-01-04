@@ -54,13 +54,13 @@
                 <div class="today-weather-icon">
                   <img src="https://ssl.gstatic.com/onebox/weather/64/cloudy.png" alt="Cloudy">
                 </div>
-                <p class="weather-explaination">
+                <p class="today-weather-explaination" id="weather-explaination">
                   Cloudy
                 </p>
               </div>
             </div>
 
-            <div class="col-md-auto">
+            <div class="col-md-3">
               <div class="today-weather">
                 <span class="main-temperature" id="main-temperature">
                   17
@@ -69,9 +69,14 @@
                   <a href="" id="celcius-link">°C </a> | <a href="" id="fahrenheit-link">°F </a>
                 </span>
               
-              <p class="range-today-temperature">
-                19° 14°
-              </p>
+                <p class="range-today-temperature">
+                  <span id="today-max-temperature">
+                    19°      
+                  </span>
+                  <span id="today-min-temperature">
+                    14°
+                  </span>
+                </p>
               </div>
             </div>
 
@@ -82,19 +87,19 @@
                     <p class="weather-details-title">
                       Sunrise
                     </p>
-                    <p class="weather-details-info">
+                    <p class="weather-details-info" id="sunrise-details">
                       6:03
                     </p>
                     <p class="weather-details-title">
                       Chance of rain
                     </p>
-                    <p class="weather-details-info">
+                    <p class="weather-details-info" id="rain-details">
                       10%
                     </p>
                     <p class="weather-details-title">
                       Wind
                     </p>
-                    <p class="weather-details-info">
+                    <p class="weather-details-info" id="windspeed-details">
                       2 m/s
                     </p>
                   </div>
@@ -105,19 +110,19 @@
                     <p class="weather-details-title">
                       Sunset
                     </p>
-                    <p class="weather-details-info">
+                    <p class="weather-details-info" id="sunset-details">
                       16:44
                     </p>
                     <p class="weather-details-title">
                       Humidity
                     </p>
-                    <p class="weather-details-info">
+                    <p class="weather-details-info" id="humidity-details">
                       70%
                     </p>
                     <p class="weather-details-title">
                       Feels like
                     </p>
-                    <p class="weather-details-info">
+                    <p class="weather-details-info" id="feels-like-details">
                       17°
                     </p>
                   </div>
