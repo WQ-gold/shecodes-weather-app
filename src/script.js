@@ -92,31 +92,18 @@ celciusLink.addEventListener("click", convertToCelcius);
 
 
 function showTemperature(response) {
-  let cityElement = document.querySelector("#city");
-  let weatherDescriptionElement = document.querySelector("#weather-explaination");
-  let temperatureElement = document.querySelector("#main-temperature");
-  let maxTemperatureElement = document.querySelector("#today-max-temperature");
-  let minTemperatureElement = document.querySelector("#today-min-temperature");
- // let sunriseElement = document.querySelector("#sunrise-details");
-  let rainElement = document.querySelector("#rain-details");
-  let windspeedElement = document.querySelector("#windspeed-details");
-  let sunsetElement = document.querySelector("#sunset-details");
-  let humidityElement = document.querySelector("#humidity-details");
-  let feelsLikeElement = document.querySelector("#feels-like-details");
+  document.querySelector("#city").innerHTML = response.data.name;
+  document.querySelector("#weather-explaination").innerHTML = response.data.weather[0].description;
+  document.querySelector("#main-temperature").innerHTML = Math.round(response.data.main.temp);
+  document.querySelector("#today-max-temperature").innerHTML = `${Math.round(response.data.main.temp_max)}°`;
+  document.querySelector("#today-min-temperature").innerHTML = `${Math.round(response.data.main.temp_min)}°`;
+ // document.querySelector("#sunrise-details").innerHTML = Math.round(response.data.sys.sunrise);
+  document.querySelector("#rain-details").innerHTML = `${Math.round(response.data.clouds.all)}%`;
+  document.querySelector("#windspeed-details").innerHTML = `${Math.round(response.data.wind.speed)}m/s`;
+ // document.querySelector("#sunset-details").innerHTML = Math.round(response.data.sys.sunset*1000);
+  document.querySelector("#humidity-details").innerHTML = `${Math.round(response.data.main.humidity)}%`;
+  document.querySelector("#feels-like-details").innerHTML = `${Math.round(response.data.main.feels_like)}°`;
 
-  cityElement.innerHTML = response.data.name;
-  weatherDescriptionElement.innerHTML = response.data.weather[0].description;
-  temperatureElement.innerHTML = Math.round(response.data.main.temp);
-  maxTemperatureElement.innerHTML = `${Math.round(response.data.main.temp_max)}°`;
-  minTemperatureElement.innerHTML = `${Math.round(response.data.main.temp_min)}°`;
- // sunriseElement.innerHTML = Math.round(response.data.sys.sunrise);
-  rainElement.innerHTML = `${Math.round(response.data.clouds.all)}%`;
-  windspeedElement.innerHTML = `${Math.round(response.data.wind.speed)}m/s`;
-  sunsetElement.innerHTML = Math.round(response.data.sys.sunset*1000);
-  humidityElement.innerHTML = `${Math.round(response.data.main.humidity)}%`;
-  feelsLikeElement.innerHTML = `${Math.round(response.data.main.feels_like)}°`;
-
-//  console.log(`The temperature in ${currentCity} is ${temperatureNow} degrees`);
   console.log(response.data);
 }
 
