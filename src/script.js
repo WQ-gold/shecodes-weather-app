@@ -51,15 +51,11 @@ function convertDtToHours(dt){
 
   if (dayHour < 10) {
     dayHour = `0${dayHour}`;
-  } else {
-    dayHour =`${dayHour}`;
-  }
+  } 
 
   if (dayMinutes < 10) {
     dayMinutes = `0${dayMinutes}`;
-  } else {
-    dayMinutes = `${dayMinutes}`;
-  }
+  } 
   
   return `${dayHour}:${dayMinutes}`
 }
