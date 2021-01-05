@@ -44,6 +44,25 @@ function formatDate(timestamp) {
   return `${currentMonth} ${currentDate}, ${currentYear} <br/> ${currentDay}, ${currentHour}:${currentMinute}`;
 }
 
+function convertDtToHours(dt){
+  let day = new Date(dt *1000);
+  let dayHour = day.getUTCHours();
+  let dayMinutes = day.getUTCMinutes();
+
+  if (dayHour < 10) {
+    dayHour = `0${dayHour}`;
+  } else {
+    dayHour =`${dayHour}`;
+  }
+
+  if (dayMinutes < 10) {
+    dayMinutes = `0${dayMinutes}`;
+  } else {
+    dayMinutes = `${dayMinutes}`;
+  }
+  
+  return `${dayHour}:${dayMinutes}`
+}
 
 function showCity(event) {
   event.preventDefault();
@@ -98,14 +117,17 @@ function showTemperature(response) {
   document.querySelector("#main-temperature").innerHTML = Math.round(response.data.main.temp);
   document.querySelector("#today-max-temperature").innerHTML = `${Math.round(response.data.main.temp_max)}°`;
   document.querySelector("#today-min-temperature").innerHTML = `${Math.round(response.data.main.temp_min)}°`;
- // document.querySelector("#sunrise-details").innerHTML = Math.round(response.data.sys.sunrise);
+
+  document.querySelector("#sunrise-details").innerHTML = convertDtToHours(response.data.sys.sunrise + response.data.timezone);
   document.querySelector("#rain-details").innerHTML = `${Math.round(response.data.clouds.all)}%`;
   document.querySelector("#windspeed-details").innerHTML = `${Math.round(response.data.wind.speed)}m/s`;
- // document.querySelector("#sunset-details").innerHTML = Math.round(response.data.sys.sunset*1000);
+
+  document.querySelector("#sunset-details").innerHTML = convertDtToHours(response.data.sys.sunset + response.data.timezone);
   document.querySelector("#humidity-details").innerHTML = `${Math.round(response.data.main.humidity)}%`;
   document.querySelector("#feels-like-details").innerHTML = `${Math.round(response.data.main.feels_like)}°`;
   document.querySelector("#date").innerHTML = formatDate(response.data.dt * 1000);
 
+  
   console.log(response.data);
 }
 
