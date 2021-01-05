@@ -1,6 +1,6 @@
-let now = new Date();
+function formatDate(timestamp) {
+  let now = new Date(timestamp);
 
-function formatDate() {
   let days = [
     "Sunday",
     "Monday",
@@ -33,15 +33,16 @@ function formatDate() {
   let currentHour = now.getHours();
   let currentMinute = now.getMinutes();
 
+  if (currentHour < 10) {
+    currentHour = `0${currentHour}`;
+  }
+
   if (currentMinute < 10) {
     currentMinute = `0${currentMinute}`;
   }
 
-  let updatedDate = document.querySelector("#date");
-  updatedDate.innerHTML = `${currentMonth} ${currentDate}, ${currentYear} <br /> ${currentDay}, ${currentHour}:${currentMinute}`;
+  return `${currentMonth} ${currentDate}, ${currentYear} <br/> ${currentDay}, ${currentHour}:${currentMinute}`;
 }
-
-formatDate(now);
 
 
 function showCity(event) {
@@ -103,6 +104,7 @@ function showTemperature(response) {
  // document.querySelector("#sunset-details").innerHTML = Math.round(response.data.sys.sunset*1000);
   document.querySelector("#humidity-details").innerHTML = `${Math.round(response.data.main.humidity)}%`;
   document.querySelector("#feels-like-details").innerHTML = `${Math.round(response.data.main.feels_like)}°`;
+  document.querySelector("#date").innerHTML = formatDate(response.data.dt * 1000);
 
   console.log(response.data);
 }
