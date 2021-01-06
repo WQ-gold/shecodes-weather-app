@@ -42,11 +42,13 @@ a:hover {
 
 .weather-info {
   margin-bottom: 20px;
+  padding-left: 20px;
 }
 
 .today-weather {
   text-align: center;
   margin: 10px auto;
+  white-space: nowrap;
 }
 
 .today-weather-explaination::first-letter {
