@@ -124,8 +124,9 @@ function showTemperature(response) {
   document.querySelector("#sunset-details").innerHTML = convertDtToHours(response.data.sys.sunset + response.data.timezone);
   document.querySelector("#humidity-details").innerHTML = `${Math.round(response.data.main.humidity)}%`;
   document.querySelector("#feels-like-details").innerHTML = `${Math.round(response.data.main.feels_like)}°`;
+  
   document.querySelector("#date").innerHTML = formatDate(response.data.dt * 1000);
-
+  document.querySelector("#icon").setAttribute("src",`http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
   
   console.log(response.data);
 }
