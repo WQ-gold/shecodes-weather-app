@@ -45,12 +45,14 @@ a:hover {
   padding-left: 20px;
 }
 
-.today-weather {
+.col-md-3 {
   text-align: center;
   margin: 10px auto;
-  white-space: nowrap;
 }
 
+.today-weather {
+  white-space: nowrap;
+}
 .today-weather-explaination::first-letter {
   text-transform: uppercase;
 }
