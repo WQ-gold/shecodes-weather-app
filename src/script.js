@@ -41,8 +41,11 @@ function formatDate(timestamp) {
     currentMinute = `0${currentMinute}`;
   }
 
-  return `${currentMonth} ${currentDate}, ${currentYear} <br/> ${currentDay}, ${currentHour}:${currentMinute}`;
+  return `${currentMonth} ${currentDate}, ${currentYear} 
+  <br/> ${currentDay}, ${currentHour}:${currentMinute} (Last updated)`;
 }
+
+  document.getElementById('last-updated').style.fontStyle = 'italic';
 
 function convertDtToHours(dt){
   let day = new Date(dt *1000);
