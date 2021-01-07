@@ -42,10 +42,8 @@ function formatDate(timestamp) {
   }
 
   return `${currentMonth} ${currentDate}, ${currentYear} 
-  <br/> ${currentDay}, ${currentHour}:${currentMinute} (Last updated)`;
+  <br/> ${currentDay}, ${currentHour}:${currentMinute}`;
 }
-
-  document.getElementById('last-updated').style.fontStyle = 'italic';
 
 function convertDtToHours(dt){
   let day = new Date(dt *1000);
@@ -84,9 +82,8 @@ function searchCity(city) {
   axios.get(apiUrl).then(showTemperature);
 }
 
-let submitCity = document.querySelector("#search-city-form");
-submitCity.addEventListener("submit", showCity);
-
+document.querySelector("#search-city-form").addEventListener("submit", showCity);
+searchCity("Batu Pahat");
 
 function convertToFahrenheit(event) {
   event.preventDefault();
@@ -96,8 +93,7 @@ function convertToFahrenheit(event) {
   temperatureElement.innerHTML = Math.round(temperature * (9 / 5) + 32);
 }
 
-let fahrenheitLink = document.querySelector("#fahrenheit-link");
-fahrenheitLink.addEventListener("click", convertToFahrenheit);
+document.querySelector("#fahrenheit-link").addEventListener("click", convertToFahrenheit);
 
 function convertToCelcius(event) {
   event.preventDefault();
@@ -106,8 +102,8 @@ function convertToCelcius(event) {
   temperature = Number(temperature);
   temperatureElement.innerHTML = 17;
 }
-let celciusLink = document.querySelector("#celcius-link");
-celciusLink.addEventListener("click", convertToCelcius);
+
+document.querySelector("#celcius-link").addEventListener("click", convertToCelcius);
 
 
 function showTemperature(response) {
