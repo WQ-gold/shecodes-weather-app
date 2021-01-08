@@ -83,35 +83,41 @@ function searchCity(city) {
 }
 
 document.querySelector("#search-city-form").addEventListener("submit", showCity);
-searchCity("Batu Pahat");
+
 
 function convertToFahrenheit(event) {
   event.preventDefault();
-  let temperatureElement = document.querySelector("#main-temperature");
-  let temperature = temperatureElement.innerHTML;
-  temperature = Number(temperature);
-  temperatureElement.innerHTML = Math.round(temperature * (9 / 5) + 32);
+  document.querySelector("#main-temperature").innerHTML = Math.round(celsiusTemperature * (9 / 5) + 32);
+  document.querySelector("#today-min-temperature").innerHTML = Math.round(minCelsiusTemperature * (9 / 5) + 32);
+  document.querySelector("#today-max-temperature").innerHTML = Math.round(maxCelsiusTemperature * (9 / 5) + 32);
+  celsiusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
 }
 
-document.querySelector("#fahrenheit-link").addEventListener("click", convertToFahrenheit);
+document.querySelector("#fahrenheitLink").addEventListener("click", convertToFahrenheit);
 
 function convertToCelcius(event) {
   event.preventDefault();
-  let temperatureElement = document.querySelector("#main-temperature");
-  let temperature = temperatureElement.innerHTML;
-  temperature = Number(temperature);
-  temperatureElement.innerHTML = 17;
+  document.querySelector("#main-temperature").innerHTML = Math.round(celsiusTemperature);
+  document.querySelector("#today-min-temperature").innerHTML = Math.round(minCelsiusTemperature);
+  document.querySelector("#today-max-temperature").innerHTML = Math.round(maxCelsiusTemperature);
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
 }
 
-document.querySelector("#celcius-link").addEventListener("click", convertToCelcius);
+document.querySelector("#celsiusLink").addEventListener("click", convertToCelcius);
 
 
 function showTemperature(response) {
+  celsiusTemperature = response.data.main.temp;
+  maxCelsiusTemperature = response.data.main.temp_max;
+  minCelsiusTemperature = response.data.main.temp_min;
+
   document.querySelector("#city").innerHTML = response.data.name;
   document.querySelector("#weather-explaination").innerHTML = response.data.weather[0].description;
-  document.querySelector("#main-temperature").innerHTML = Math.round(response.data.main.temp);
-  document.querySelector("#today-max-temperature").innerHTML = `${Math.round(response.data.main.temp_max)}°`;
-  document.querySelector("#today-min-temperature").innerHTML = `${Math.round(response.data.main.temp_min)}°`;
+  document.querySelector("#main-temperature").innerHTML = Math.round(celsiusTemperature);
+  document.querySelector("#today-min-temperature").innerHTML = Math.round(minCelsiusTemperature);
+  document.querySelector("#today-max-temperature").innerHTML = Math.round(maxCelsiusTemperature);
 
   document.querySelector("#sunrise-details").innerHTML = convertDtToHours(response.data.sys.sunrise + response.data.timezone);
   document.querySelector("#rain-details").innerHTML = `${Math.round(response.data.clouds.all)}%`;
@@ -143,5 +149,11 @@ function getCurrentPosition(event) {
   navigator.geolocation.getCurrentPosition(showPosition);
 }
 
-let clickForCurrentLocation = document.querySelector("#searchButton");
-searchButton.addEventListener("click", getCurrentPosition);
+
+let celsiusTemperature = null;
+let maxCelsiusTemperature = null;
+let minCelsiusTemperature = null;
+
+document.querySelector("#searchButton").addEventListener("click", getCurrentPosition);
+
+searchCity("Batu Pahat");

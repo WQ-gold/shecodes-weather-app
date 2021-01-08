@@ -53,6 +53,15 @@ a:hover {
 .today-weather {
   white-space: nowrap;
 }
+
+.today-weather .active {
+  cursor: default;
+}
+
+.today-weather .active:hover {
+  text-decoration: none;
+}
+
 .today-weather-explaination::first-letter {
   text-transform: uppercase;
 }
