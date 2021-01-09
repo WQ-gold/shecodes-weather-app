@@ -61,53 +61,6 @@ function convertDtToHours(dt){
   return `${dayHour}:${dayMinutes}`
 }
 
-function showCity(event) {
-  event.preventDefault();
-
-  let cityChange = document.querySelector("#city-input");
-  let currentCity = document.querySelector("#city");
-  if (cityChange.value.length === 0) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else {
-    currentCity.innerHTML = `${cityChange.value}`;
-    searchCity(cityChange.value);
-  }
-}
-
-function searchCity(city) {
-  let units = "metric";
-  let apiKey = "20d2bbd509fde70ccf859259bef834b1";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
-
-  axios.get(apiUrl).then(showTemperature);
-}
-
-document.querySelector("#search-city-form").addEventListener("submit", showCity);
-
-
-function convertToFahrenheit(event) {
-  event.preventDefault();
-  document.querySelector("#main-temperature").innerHTML = Math.round(celsiusTemperature * (9 / 5) + 32);
-  document.querySelector("#today-min-temperature").innerHTML = Math.round(minCelsiusTemperature * (9 / 5) + 32);
-  document.querySelector("#today-max-temperature").innerHTML = Math.round(maxCelsiusTemperature * (9 / 5) + 32);
-  celsiusLink.classList.remove("active");
-  fahrenheitLink.classList.add("active");
-}
-
-document.querySelector("#fahrenheitLink").addEventListener("click", convertToFahrenheit);
-
-function convertToCelcius(event) {
-  event.preventDefault();
-  document.querySelector("#main-temperature").innerHTML = Math.round(celsiusTemperature);
-  document.querySelector("#today-min-temperature").innerHTML = Math.round(minCelsiusTemperature);
-  document.querySelector("#today-max-temperature").innerHTML = Math.round(maxCelsiusTemperature);
-  celsiusLink.classList.add("active");
-  fahrenheitLink.classList.remove("active");
-}
-
-document.querySelector("#celsiusLink").addEventListener("click", convertToCelcius);
-
-
 function showTemperature(response) {
   celsiusTemperature = response.data.main.temp;
   maxCelsiusTemperature = response.data.main.temp_max;
@@ -134,6 +87,14 @@ function showTemperature(response) {
   console.log(response.data);
 }
 
+function searchCity(city) {
+  let units = "metric";
+  let apiKey = "20d2bbd509fde70ccf859259bef834b1";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
+
+  axios.get(apiUrl).then(showTemperature);
+}
+
 function showPosition(position) {
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
@@ -149,11 +110,45 @@ function getCurrentPosition(event) {
   navigator.geolocation.getCurrentPosition(showPosition);
 }
 
+function showCity(event) {
+  event.preventDefault();
+  let cityChange = document.querySelector("#city-input");
+  let currentCity = document.querySelector("#city");
+  if (cityChange.value.length === 0) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    currentCity.innerHTML = `${cityChange.value}`;
+    searchCity(cityChange.value);
+  }
+}
+
+document.querySelector("#search-city-form").addEventListener("submit", showCity);
+document.querySelector("#searchButton").addEventListener("click", getCurrentPosition);
+
+function convertToFahrenheit(event) {
+  event.preventDefault();
+  document.querySelector("#main-temperature").innerHTML = Math.round(celsiusTemperature * (9 / 5) + 32);
+  document.querySelector("#today-min-temperature").innerHTML = Math.round(minCelsiusTemperature * (9 / 5) + 32);
+  document.querySelector("#today-max-temperature").innerHTML = Math.round(maxCelsiusTemperature * (9 / 5) + 32);
+  celsiusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
+}
+
+document.querySelector("#fahrenheitLink").addEventListener("click", convertToFahrenheit);
+
+function convertToCelcius(event) {
+  event.preventDefault();
+  document.querySelector("#main-temperature").innerHTML = Math.round(celsiusTemperature);
+  document.querySelector("#today-min-temperature").innerHTML = Math.round(minCelsiusTemperature);
+  document.querySelector("#today-max-temperature").innerHTML = Math.round(maxCelsiusTemperature);
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
+}
+
+document.querySelector("#celsiusLink").addEventListener("click", convertToCelcius);
 
 let celsiusTemperature = null;
 let maxCelsiusTemperature = null;
 let minCelsiusTemperature = null;
-
-document.querySelector("#searchButton").addEventListener("click", getCurrentPosition);
 
 searchCity("Batu Pahat");
