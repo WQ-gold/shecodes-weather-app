@@ -90,8 +90,9 @@ a:hover {
   left: 25px;
 }
 
-.weather-details-info {
-  margin-top: -20px;
+.weather-details-title {
+  margin-top: 10px;
+  margin-bottom: 0;
 }
 
 .weather-forecast {
@@ -99,9 +100,10 @@ a:hover {
 }
 
 .weather-forecast-day,
+.weather-forecast-description,
 .weather-forecast-temperature {
   font-size: 18px;
-  margin-top: 10px;
+  margin: 0 auto;
 }
 
 #weather-explaination {

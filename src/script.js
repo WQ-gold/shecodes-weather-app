@@ -1,16 +1,6 @@
 function formatDate(timestamp) {
   let now = new Date(timestamp);
 
-  let days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
-  ];
-
   let months = [
     "January",
     "February",
@@ -27,9 +17,29 @@ function formatDate(timestamp) {
   ];
 
   let currentYear = now.getFullYear();
-  let currentDay = days[now.getDay()];
   let currentMonth = months[now.getMonth()];
   let currentDate = now.getDate();
+ 
+  return `${currentMonth} ${currentDate}, ${currentYear}`;
+}
+
+function formatDay(timestamp){
+  let now = new Date (timestamp);
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+  let currentDay = days[now.getDay()];
+  return `${currentDay}`;
+}
+
+function formatTime(timestamp){
+  let now = new Date(timestamp);
   let currentHour = now.getHours();
   let currentMinute = now.getMinutes();
 
@@ -40,9 +50,7 @@ function formatDate(timestamp) {
   if (currentMinute < 10) {
     currentMinute = `0${currentMinute}`;
   }
-
-  return `${currentMonth} ${currentDate}, ${currentYear} 
-  <br/> ${currentDay}, ${currentHour}:${currentMinute}`;
+  return `${currentHour}:${currentMinute}`;
 }
 
 function convertDtToHours(dt){
@@ -61,10 +69,45 @@ function convertDtToHours(dt){
   return `${dayHour}:${dayMinutes}`
 }
 
+function showForecast(response){
+  let forecastElement = document.querySelector('#forecast');
+  forecastElement.innerHTML = null;
+  let forecast = null;
+
+for (let index = 1; index < 6; index++) {
+  forecast = response.data.daily[index];
+  let dayForecast = formatDay(forecast.dt * 1000)
+  let forecastDescription = forecast.weather[0].main;
+  minForecastTemperature = Math.round(forecast.temp.min);
+  maxForecastTemperature = Math.round(forecast.temp.max);
+  forecastElement.innerHTML += `
+  <div class="row row-cols-5">
+    <div class="col">
+      <p class="weather-forecast-day">
+        ${dayForecast}
+      </p>
+      <div class="weather-forecast-icon">
+        <img src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png">
+      </div>
+      <p class="weather-forecast-description">
+        ${forecastDescription}
+      </p>    
+        <p class="weather-forecast-temperature">
+          <span id="min-forecast-temperature">${minForecastTemperature}</span><span>°</span>
+          <span id="max-forecast-temperature">${maxForecastTemperature}</span><span>°</span>
+        </p>    
+    </div>
+   </div>
+   `;  
+}
+
+}
+
 function showTemperature(response) {
   celsiusTemperature = response.data.main.temp;
   maxCelsiusTemperature = response.data.main.temp_max;
   minCelsiusTemperature = response.data.main.temp_min;
+  feelsLikeTemperature = response.data.main.feels_like;
 
   document.querySelector("#city").innerHTML = response.data.name;
   document.querySelector("#weather-explaination").innerHTML = response.data.weather[0].description;
@@ -78,13 +121,19 @@ function showTemperature(response) {
 
   document.querySelector("#sunset-details").innerHTML = convertDtToHours(response.data.sys.sunset + response.data.timezone);
   document.querySelector("#humidity-details").innerHTML = `${Math.round(response.data.main.humidity)}%`;
-  document.querySelector("#feels-like-details").innerHTML = `${Math.round(response.data.main.feels_like)}°`;
+  document.querySelector("#feels-like-details").innerHTML = `${Math.round(feelsLikeTemperature)}`;
   
   document.querySelector("#date").innerHTML = formatDate(response.data.dt * 1000);
+  document.querySelector("#day").innerHTML = formatDay(response.data.dt * 1000);
+  document.querySelector("#time").innerHTML = formatTime(response.data.dt * 1000);
   document.querySelector("#icon").setAttribute("src",`http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
   document.querySelector("#icon").setAttribute("alt", response.data.weather[0].description);
 
-  console.log(response.data);
+  let units = "metric";
+  let apiKey = "20d2bbd509fde70ccf859259bef834b1";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${response.data.coord.lat}&lon=${response.data.coord.lon}&exclude=hourly.daily&appid=${apiKey}&units=${units}`;
+
+  axios.get(apiUrl).then(showForecast);
 }
 
 function errorFunction(){
@@ -134,6 +183,9 @@ function convertToFahrenheit(event) {
   document.querySelector("#main-temperature").innerHTML = Math.round(celsiusTemperature * (9 / 5) + 32);
   document.querySelector("#today-min-temperature").innerHTML = Math.round(minCelsiusTemperature * (9 / 5) + 32);
   document.querySelector("#today-max-temperature").innerHTML = Math.round(maxCelsiusTemperature * (9 / 5) + 32);
+  document.querySelector("#feels-like-details").innerHTML = Math.round(feelsLikeTemperature * (9 / 5) + 32);
+  document.querySelector("#min-forecast-temperature").innerHTML = Math.round(minForecastTemperature * (9 / 5) + 32);
+  document.querySelector("#max-forecast-temperature").innerHTML = Math.round(maxForecastTemperature * (9 / 5) + 32);
   celsiusLink.classList.remove("active");
   fahrenheitLink.classList.add("active");
 }
@@ -145,6 +197,9 @@ function convertToCelcius(event) {
   document.querySelector("#main-temperature").innerHTML = Math.round(celsiusTemperature);
   document.querySelector("#today-min-temperature").innerHTML = Math.round(minCelsiusTemperature);
   document.querySelector("#today-max-temperature").innerHTML = Math.round(maxCelsiusTemperature);
+  document.querySelector("#feels-like-details").innerHTML = Math.round(feelsLikeTemperature);
+  document.querySelector("#min-forecast-temperature").innerHTML = Math.round(minForecastTemperature);
+  document.querySelector("#max-forecast-temperature").innerHTML = Math.round(maxForecastTemperature);
   celsiusLink.classList.add("active");
   fahrenheitLink.classList.remove("active");
 }
