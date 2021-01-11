@@ -179,26 +179,26 @@ function convertToFahrenheit(event) {
   event.preventDefault();
   document.querySelector("#main-temperature").innerHTML = Math.round(
     celsiusTemperature * (9 / 5) + 32
-    );
+   );
   document.querySelector("#today-min-temperature").innerHTML = Math.round(
     minCelsiusTemperature * (9 / 5) + 32
-    );
+   );
   document.querySelector("#today-max-temperature").innerHTML = Math.round(
     maxCelsiusTemperature * (9 / 5) + 32
-    );
+   );
   document.querySelector("#feels-like-details").innerHTML = Math.round(
     feelsLikeTemperature * (9 / 5) + 32
-    );
+   );
   
   document.querySelectorAll(".min-forecast-temperature")
-  .forEach(function(item){
+  .forEach(function (item){
     // grabbing the current value to convert
     let currentTemp = item.innerHTML;
     item.innerHTML = Math.round(currentTemp * (9 / 5) + 32);
   });
 
     document.querySelectorAll(".max-forecast-temperature")
-    .forEach(function(item){
+    .forEach(function (item){
     // grabbing the current value to convert
     let currentTemp = item.innerHTML;
     item.innerHTML = Math.round(currentTemp * (9 / 5) + 32);
@@ -207,51 +207,51 @@ function convertToFahrenheit(event) {
   celsiusLink.classList.remove("active");
   fahrenheitLink.classList.add("active");
 
-  fahrenheitLink.removeEventListener("click",convertToFahrenheit);
-  celsiusLink.addEventListener("click",convertToCelsius);
+  fahrenheitLink.removeEventListener("click", convertToFahrenheit);
+  celsiusLink.addEventListener("click", convertToCelsius);
 }
 
 let fahrenheitLink = document.querySelector("#fahrenheitLink");
-fahrenheitLink.addEventListener("click",convertToFahrenheit);
+fahrenheitLink.addEventListener("click", convertToFahrenheit);
 
 function convertToCelsius(event) {
   event.preventDefault();
   document.querySelector("#main-temperature").innerHTML = Math.round(
     celsiusTemperature
-    );
+   );
   document.querySelector("#today-min-temperature").innerHTML = Math.round(
     minCelsiusTemperature
-    );
+   );
   document.querySelector("#today-max-temperature").innerHTML = Math.round(
     maxCelsiusTemperature
-    );
+   );
   document.querySelector("#feels-like-details").innerHTML = Math.round(
     feelsLikeTemperature
-    );
+   );
 
   document.querySelectorAll(".min-forecast-temperature")
-  .forEach(function(item){
+  .forEach(function (item){
     // grabbing the current value to convert
     let currentTemp = item.innerHTML;
-    item.innerHTML = Math.round(currentTemp - 32 * (5 / 9));
+    item.innerHTML = Math.round((currentTemp - 32) * (5 / 9));
   });
 
     document.querySelectorAll(".max-forecast-temperature")
-    .forEach(function(item){
+    .forEach(function (item){
     // grabbing the current value to convert
     let currentTemp = item.innerHTML;
-    item.innerHTML = Math.round(currentTemp - 32 * (5 / 9));
+    item.innerHTML = Math.round((currentTemp - 32) * (5 / 9));
   });
 
   celsiusLink.classList.add("active");
   fahrenheitLink.classList.remove("active");
 
-  fahrenheitLink.addEventListener("click",convertToFahrenheit);
-  celsiusLink.removeEventListener("click",convertToCelsius);
+  fahrenheitLink.addEventListener("click", convertToFahrenheit);
+  celsiusLink.removeEventListener("click", convertToCelsius);
 }
 
 let celsiusLink = document.querySelector("#celsiusLink");
-celsiusLink.addEventListener("click",convertToCelsius);
+celsiusLink.addEventListener("click", convertToCelsius);
 
 let celsiusTemperature = null;
 let maxCelsiusTemperature = null;
