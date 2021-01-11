@@ -38,6 +38,7 @@ a:hover {
 .weather-info,
 .weather-forecast {
   padding-left: 20px;
+  padding-right: 20px;
 }
 
 .current-date {

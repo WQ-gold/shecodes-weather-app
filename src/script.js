@@ -74,34 +74,31 @@ function showForecast(response){
   forecastElement.innerHTML = null;
   let forecast = null;
 
-for (let index = 1; index < 7; index++) {
-  forecast = response.data.daily[index];
-  let dayForecast = formatDay(forecast.dt * 1000)
-  let forecastDescription = forecast.weather[0].main;
-  minForecastTemperature = Math.round(forecast.temp.min);
-  maxForecastTemperature = Math.round(forecast.temp.max);
-  forecastElement.innerHTML += `
-  <div class="cols-5">
-    <div class="col">
-      <p class="weather-forecast-day">
-        ${dayForecast}
-      </p>
-      <div class="weather-forecast-icon">
-        <img src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png">
-      </div>
-      <p class="weather-forecast-description">
-        ${forecastDescription}
-      </p>    
-        <p class="weather-forecast-temperature">
-          <span id="min-forecast-temperature">${minForecastTemperature}</span><span>°</span>
-          <span id="max-forecast-temperature">${maxForecastTemperature}</span><span>°</span>
+  for (let index = 1; index < 7; index++) {
+    forecast = response.data.daily[index];
+    let dayForecast = formatDay(forecast.dt * 1000)
+    let forecastDescription = forecast.weather[0].main;
+    minForecastTemperature = Math.round(forecast.temp.min);
+    maxForecastTemperature = Math.round(forecast.temp.max);
+    forecastElement.innerHTML += `
+      <div class="col">
+        <p class="weather-forecast-day">
+          ${dayForecast}
+        </p>
+        <div class="weather-forecast-icon">
+          <img src="http://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png">
+        </div>
+        <p class="weather-forecast-description">
+          ${forecastDescription}
         </p>    
-    </div>
-   </div>
-   `;  
-}
-
-}
+        <p class="weather-forecast-temperature">
+          <span class="min-forecast-temperature">${minForecastTemperature}</span><span>°</span>
+          <span class="max-forecast-temperature">${maxForecastTemperature}</span><span>°</span>
+        </p>    
+      </div>
+      `;  
+    }
+  }
 
 function showTemperature(response) {
   celsiusTemperature = response.data.main.temp;
@@ -180,31 +177,81 @@ document.querySelector("#searchButton").addEventListener("click", getCurrentPosi
 
 function convertToFahrenheit(event) {
   event.preventDefault();
-  document.querySelector("#main-temperature").innerHTML = Math.round(celsiusTemperature * (9 / 5) + 32);
-  document.querySelector("#today-min-temperature").innerHTML = Math.round(minCelsiusTemperature * (9 / 5) + 32);
-  document.querySelector("#today-max-temperature").innerHTML = Math.round(maxCelsiusTemperature * (9 / 5) + 32);
-  document.querySelector("#feels-like-details").innerHTML = Math.round(feelsLikeTemperature * (9 / 5) + 32);
-  document.querySelector("#min-forecast-temperature").innerHTML = Math.round(minForecastTemperature * (9 / 5) + 32);
-  document.querySelector("#max-forecast-temperature").innerHTML = Math.round(maxForecastTemperature * (9 / 5) + 32);
+  document.querySelector("#main-temperature").innerHTML = Math.round(
+    celsiusTemperature * (9 / 5) + 32
+    );
+  document.querySelector("#today-min-temperature").innerHTML = Math.round(
+    minCelsiusTemperature * (9 / 5) + 32
+    );
+  document.querySelector("#today-max-temperature").innerHTML = Math.round(
+    maxCelsiusTemperature * (9 / 5) + 32
+    );
+  document.querySelector("#feels-like-details").innerHTML = Math.round(
+    feelsLikeTemperature * (9 / 5) + 32
+    );
+  
+  document.querySelectorAll(".min-forecast-temperature")
+  .forEach(function(item){
+    // grabbing the current value to convert
+    let currentTemp = item.innerHTML;
+    item.innerHTML = Math.round(currentTemp * (9 / 5) + 32);
+  });
+
+    document.querySelectorAll(".max-forecast-temperature")
+    .forEach(function(item){
+    // grabbing the current value to convert
+    let currentTemp = item.innerHTML;
+    item.innerHTML = Math.round(currentTemp * (9 / 5) + 32);
+  });
+
   celsiusLink.classList.remove("active");
   fahrenheitLink.classList.add("active");
+
+  fahrenheitLink.removeEventListener("click",convertToFahrenheit);
+  celsiusLink.addEventListener("click",convertToCelsius);
 }
 
-document.querySelector("#fahrenheitLink").addEventListener("click", convertToFahrenheit);
+let fahrenheitLink = document.querySelector("#fahrenheitLink");
+fahrenheitLink.addEventListener("click",convertToFahrenheit);
 
-function convertToCelcius(event) {
+function convertToCelsius(event) {
   event.preventDefault();
-  document.querySelector("#main-temperature").innerHTML = Math.round(celsiusTemperature);
-  document.querySelector("#today-min-temperature").innerHTML = Math.round(minCelsiusTemperature);
-  document.querySelector("#today-max-temperature").innerHTML = Math.round(maxCelsiusTemperature);
-  document.querySelector("#feels-like-details").innerHTML = Math.round(feelsLikeTemperature);
-  document.querySelector("#min-forecast-temperature").innerHTML = Math.round(minForecastTemperature);
-  document.querySelector("#max-forecast-temperature").innerHTML = Math.round(maxForecastTemperature);
+  document.querySelector("#main-temperature").innerHTML = Math.round(
+    celsiusTemperature
+    );
+  document.querySelector("#today-min-temperature").innerHTML = Math.round(
+    minCelsiusTemperature
+    );
+  document.querySelector("#today-max-temperature").innerHTML = Math.round(
+    maxCelsiusTemperature
+    );
+  document.querySelector("#feels-like-details").innerHTML = Math.round(
+    feelsLikeTemperature
+    );
+
+  document.querySelectorAll(".min-forecast-temperature")
+  .forEach(function(item){
+    // grabbing the current value to convert
+    let currentTemp = item.innerHTML;
+    item.innerHTML = Math.round(currentTemp - 32 * (5 / 9));
+  });
+
+    document.querySelectorAll(".max-forecast-temperature")
+    .forEach(function(item){
+    // grabbing the current value to convert
+    let currentTemp = item.innerHTML;
+    item.innerHTML = Math.round(currentTemp - 32 * (5 / 9));
+  });
+
   celsiusLink.classList.add("active");
   fahrenheitLink.classList.remove("active");
+
+  fahrenheitLink.addEventListener("click",convertToFahrenheit);
+  celsiusLink.removeEventListener("click",convertToCelsius);
 }
 
-document.querySelector("#celsiusLink").addEventListener("click", convertToCelcius);
+let celsiusLink = document.querySelector("#celsiusLink");
+celsiusLink.addEventListener("click",convertToCelsius);
 
 let celsiusTemperature = null;
 let maxCelsiusTemperature = null;
