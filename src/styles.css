@@ -34,7 +34,9 @@ a:hover {
   margin-top: 50px;
 }
 
-.overview {
+.overview,
+.weather-info,
+.weather-forecast {
   padding-left: 20px;
 }
 
@@ -45,7 +47,6 @@ a:hover {
 
 .weather-info {
   margin-bottom: 20px;
-  padding-left: 20px;
 }
 
 .col-md-3 {

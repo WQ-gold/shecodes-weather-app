@@ -74,14 +74,14 @@ function showForecast(response){
   forecastElement.innerHTML = null;
   let forecast = null;
 
-for (let index = 1; index < 6; index++) {
+for (let index = 1; index < 7; index++) {
   forecast = response.data.daily[index];
   let dayForecast = formatDay(forecast.dt * 1000)
   let forecastDescription = forecast.weather[0].main;
   minForecastTemperature = Math.round(forecast.temp.min);
   maxForecastTemperature = Math.round(forecast.temp.max);
   forecastElement.innerHTML += `
-  <div class="row row-cols-5">
+  <div class="cols-5">
     <div class="col">
       <p class="weather-forecast-day">
         ${dayForecast}
