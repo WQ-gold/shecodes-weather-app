@@ -2,6 +2,7 @@ html,
 body {
   background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%);
   color: white;
+  height: 100%;
 }
 
 h1 {
@@ -31,7 +32,7 @@ a:hover {
 
 .container {
   max-width: 750px;
-  margin-top: 50px;
+  margin: 50px auto;
 }
 
 .overview,
